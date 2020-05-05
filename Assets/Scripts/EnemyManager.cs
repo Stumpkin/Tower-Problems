@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour
 {
   public GameObject EnemyA;
   public GameObject EnemyB;
+  public GameObject Tower;
   public float timeToWaitA = 1;
   public float timeToWaitB = 1.5f;
   public Wave currentWave;
@@ -41,14 +42,14 @@ public class EnemyManager : MonoBehaviour
 
   void Start()
   {
-
     Group groupA = new Group(EnemyA, 1f, 5);
     Group groupB = new Group(EnemyB, timeToWaitB, 3);
 
     Group[] groups = new Group[2]{groupA, groupB};
     currentWave = new Wave(new Group[2] { groupA, groupB });
-
+    SpawnTower(Tower);
     SpawnWave(currentWave);
+ 
   }
 
   private void SpawnWave(Wave newWave)
@@ -77,4 +78,14 @@ public class EnemyManager : MonoBehaviour
       @group.numberOfEnemies--;
     }
   }
+    
+    private void SpawnTower(GameObject T)
+    {
+
+        Instantiate(T);
+        //T.GetComponent<Tower>();
+        T.transform.position = waypointManager.waypoints[waypointManager.getLastIndex()].transform.position;
+    }
+    
+
 }
